@@ -19,7 +19,7 @@ export const metadata = {
     siteName: "Decor Dream DIY",
     title: "Decor Dream DIY | Soulful Home Inspiration",
     description: "Curated decor projects and DIY tutorials for beautiful living.",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "https://images.unsplash.com/photo-1616486341353-c583320f7881?auto=format&fit=crop&q=80&w=1200&h=630", width: 1200, height: 630 }],
   },
   robots: {
     index: true,
