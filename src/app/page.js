@@ -13,7 +13,7 @@ export default async function Home() {
     .order('created_at', { ascending: false });
 
   const heroPin = pins?.[0];
-  const diyProjects = pins?.filter(p => p.category?.toLowerCase().includes('diy'))?.slice(0, 3) || [];
+  const diyProjects = pins?.filter(p => p.category?.toLowerCase()?.includes('diy'))?.slice(0, 3) || [];
   const decorFeed = pins?.slice(0, 12) || [];
 
   return (
