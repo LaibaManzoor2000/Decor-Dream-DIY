@@ -4,15 +4,19 @@ import styles from "./Navbar.module.css";
 import Link from "next/link";
 import { Search, Plus, TrendingUp, Compass, Home } from "lucide-react";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    if (pathname && pathname.startsWith("/admin")) return null;
 
     return (
         <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>

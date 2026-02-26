@@ -4,6 +4,8 @@ import { supabase } from "../utils/supabase/client";
 import { Sofa, Hammer, ChefHat, Ruler, Lightbulb, Sparkles, Heart, ChevronRight } from "lucide-react";
 import { getSafeImg } from "../utils/images";
 
+export const revalidate = 0; // Disable caching to fetch live pins
+
 export default async function Home() {
   const { data: pins, error } = await supabase
     .from('pins')

@@ -116,7 +116,7 @@
 .actionBtn:hover {
     background: white;
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .contentBody {
@@ -145,6 +145,48 @@
 
 .paragraph {
     margin-bottom: 2rem;
+}
+
+.richTextContent {
+    margin-bottom: 2rem;
+}
+
+.richTextContent p {
+    margin-bottom: 1.5rem;
+}
+
+.richTextContent h1,
+.richTextContent h2,
+.richTextContent h3 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+}
+
+.richTextContent ul,
+.richTextContent ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.richTextContent li {
+    margin-bottom: 0.5rem;
+}
+
+.richTextContent strong {
+    color: var(--text-primary);
+}
+
+.richTextContent blockquote {
+    border-left: 4px solid var(--brand-primary);
+    padding-left: 1rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin: 1.5rem 0;
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
 }
 
 .curatedTip {

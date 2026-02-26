@@ -4,6 +4,8 @@ import { supabase } from "../../utils/supabase/client";
 import { Heart } from "lucide-react";
 import { getSafeImg } from "../../utils/images";
 
+export const revalidate = 0;
+
 export default async function PinsPage() {
     const { data: pins, error } = await supabase
         .from('pins')

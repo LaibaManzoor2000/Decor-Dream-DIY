@@ -4,6 +4,8 @@ import { supabase } from "../../utils/supabase/client";
 import { Hammer, Ruler, ChevronRight, Clock, Banknote } from "lucide-react";
 import { getSafeImg } from "../../utils/images";
 
+export const revalidate = 0;
+
 export const metadata = {
     title: "DIY Project Guides | Master the Art of Home Decor",
     description: "Step-by-step professional DIY tutorials for your home. From furniture flips to wall art, learn how to create a beautiful home on a budget with Decor Dream DIY.",

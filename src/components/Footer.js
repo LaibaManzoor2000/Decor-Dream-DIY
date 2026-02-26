@@ -1,8 +1,14 @@
+"use client";
+
 import Link from 'next/link';
 import styles from './Footer.module.css';
 import { Instagram, Twitter, Mail, Heart } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+    const pathname = usePathname();
+    if (pathname && pathname.startsWith('/admin')) return null;
+
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
@@ -50,7 +56,7 @@ export default function Footer() {
 
                 <div className={styles.bottom}>
                     <div className={styles.copy}>
-                        &copy; {new Date().getFullYear()} Decor Dream DIY. Made with <Heart size={14} fill="currentColor" /> for beautiful homes.
+                        &copy; {new Date().getFullYear()} Decor Dream DIY.
                     </div>
                     <div className={styles.legals}>
                         <Link href="/privacy">Privacy</Link>

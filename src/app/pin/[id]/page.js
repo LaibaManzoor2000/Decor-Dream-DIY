@@ -76,9 +76,10 @@ export default async function PinDetail({ params }) {
                         </div>
 
                         {pin.content ? (
-                            pin.content.split('\n').map((paragraph, idx) => (
-                                paragraph.trim() && <p key={idx} className={styles.paragraph}>{paragraph}</p>
-                            ))
+                            <div
+                                className={styles.richTextContent}
+                                dangerouslySetInnerHTML={{ __html: pin.content }}
+                            />
                         ) : (
                             <div className={styles.defaultContent}>
                                 <h2>Professional Design Insights</h2>

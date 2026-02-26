@@ -7,6 +7,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LogOut, LayoutDashboard, PlusCircle, CheckCircle } from "lucide-react";
 
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+
+
 export default function AdminPage() {
     const [user, setUser] = useState(null);
     const [initializing, setInitializing] = useState(true);
@@ -178,9 +184,15 @@ export default function AdminPage() {
                             <textarea name="description" value={formData.description} onChange={handleChange} rows="2" placeholder="Catchy Pinterest-friendly description..."></textarea>
                         </div>
 
-                        <div className={styles.inputGroup}>
-                            <label>Full Blog Article (Markdown/HTML supported)</label>
-                            <textarea name="content" value={formData.content} onChange={handleChange} rows="12" required placeholder="Paste your generated article here..."></textarea>
+                        <div className={styles.inputGroup} style={{ height: '400px', marginBottom: '3rem' }}>
+                            <label>Full Blog Article (Gutenberg/Rich Text supported)</label>
+                            <ReactQuill
+                                theme="snow"
+                                value={formData.content}
+                                onChange={(val) => setFormData({ ...formData, content: val })}
+                                placeholder="Write your professional blog article here..."
+                                style={{ height: '300px' }}
+                            />
                         </div>
 
                         <div className={styles.actions}>

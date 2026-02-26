@@ -13,6 +13,8 @@ export async function generateMetadata({ params }) {
     };
 }
 
+export const revalidate = 0;
+
 export default async function CategoryPage({ params }) {
     const { slug } = params;
     const categoryTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
