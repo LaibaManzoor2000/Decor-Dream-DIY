@@ -5,17 +5,18 @@ import { supabase } from "../../../utils/supabase/client";
 import { useRouter } from "next/navigation";
 import styles from "./Login.module.css";
 import Link from "next/link";
-import { Lock, Mail, ArrowRight, Home } from "lucide-react";
+import { Lock, Mail, ArrowRight, Home, UserPlus } from "lucide-react";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isSignUp, setIsSignUp] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
     const router = useRouter();
 
     useEffect(() => {
-        // Check if user is already logged in
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
@@ -25,25 +26,36 @@ export default function LoginPage() {
         checkUser();
     }, [router]);
 
-    const handleLogin = async (e) => {
+    const handleAction = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
+        setSuccess("");
 
         try {
-            const { data, error: authError } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-            });
-
-            if (authError) throw authError;
-
-            if (data.session) {
-                router.push("/admin");
-                router.refresh();
+            if (isSignUp) {
+                const { data, error: authError } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        emailRedirectTo: `${window.location.origin}/admin`,
+                    }
+                });
+                if (authError) throw authError;
+                setSuccess("Success! Please check your email for a confirmation link (or just try logging in if email confirmation is disabled).");
+            } else {
+                const { data, error: authError } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                });
+                if (authError) throw authError;
+                if (data.session) {
+                    router.push("/admin");
+                    router.refresh();
+                }
             }
         } catch (err) {
-            setError(err.message || "Failed to sign in. Please check your credentials.");
+            setError(err.message || "An error occurred. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -54,15 +66,16 @@ export default function LoginPage() {
             <div className={styles.loginCard}>
                 <div className={styles.header}>
                     <div className={styles.logoGroup}>
-                        <Lock className={styles.lockIcon} size={24} />
-                        <h1>Admin Access</h1>
+                        {isSignUp ? <UserPlus className={styles.lockIcon} size={24} /> : <Lock className={styles.lockIcon} size={24} />}
+                        <h1>{isSignUp ? "Create Admin" : "Admin Access"}</h1>
                     </div>
-                    <p>Enter your credentials to manage Decor Dream DIY.</p>
+                    <p>{isSignUp ? "Sign up to start managing Decor Dream DIY." : "Enter your credentials to manage Decor Dream DIY."}</p>
                 </div>
 
                 {error && <div className={styles.errorAlert}>{error}</div>}
+                {success && <div className={styles.successAlert} style={{ padding: '1rem', background: '#dcfce7', color: '#166534', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>{success}</div>}
 
-                <form onSubmit={handleLogin} className={styles.form}>
+                <form onSubmit={handleAction} className={styles.form}>
                     <div className={styles.inputGroup}>
                         <label>Email Address</label>
                         <div className={styles.inputWrapper}>
@@ -71,7 +84,7 @@ export default function LoginPage() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="admin@decordreamdiy.com"
+                                placeholder="name@example.com"
                                 required
                             />
                         </div>
@@ -92,15 +105,23 @@ export default function LoginPage() {
                     </div>
 
                     <button type="submit" className={styles.loginBtn} disabled={loading}>
-                        {loading ? "Authenticating..." : (
+                        {loading ? "Processing..." : (
                             <>
-                                Sign In <ArrowRight size={18} />
+                                {isSignUp ? "Sign Up" : "Sign In"} <ArrowRight size={18} />
                             </>
                         )}
                     </button>
                 </form>
 
                 <div className={styles.footer}>
+                    <button 
+                        onClick={() => setIsSignUp(!isSignUp)} 
+                        className={styles.toggleBtn}
+                        style={{ background: 'none', border: 'none', color: 'var(--brand-primary)', cursor: 'pointer', fontSize: '0.9rem', marginBottom: '1rem' }}
+                    >
+                        {isSignUp ? "Already have an account? Sign In" : "Need an account? Create one"}
+                    </button>
+                    <br />
                     <Link href="/" className={styles.backLink}>
                         <Home size={16} /> Back to Website
                     </Link>
