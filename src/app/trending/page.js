@@ -9,6 +9,8 @@ export const metadata = {
     description: "Explore the most popular home decor trends, viral DIY projects, and seasonal styles that are taking the design world by storm.",
 };
 
+export const revalidate = 0;
+
 export default async function TrendingPage() {
     const { data: pins, error } = await supabase
         .from('pins')
